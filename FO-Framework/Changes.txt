@@ -1,0 +1,75 @@
+﻿/*
+Copyright 2022 Revenu Québec
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this
+software and associated documentation files (the "Software"), to deal in the Software
+without restriction, including without limitation the rights to use, copy, modify,
+merge, publish, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+Version 2023-06-08 - Bug fix and new feature
+------------------
+1. Bug Fix : Correction of a bug in the creation of a transaction's json document.
+
+2. New : Three new fields added to the user report.
+
+Version 2023-05-08 - New url for Certificate Request
+------------------
+1. The new URL for Certificate Request is now https://certificats.cnfr.api.rq-fo.ca/enrolement
+   instead of https://cnfr.api.rq-fo.ca/enrolement
+
+Version 2023-03-29 - Bug fix
+------------------
+1. Bug Fix : Correction of the data to concatenate for the User Report
+             Added GetDocumentConcateneQRCode( ) function to concatenate data for json document and QR code
+             Added GetDocumentConcateneSignature( ) function to concatenate data for json document and QR code
+             Removed GetDocumentConcatene() function. It is not used anymore
+
+Version 2022-12-22 - Bug fix, new feature and enhancement
+------------------
+1. Bug Fix : The authorization code was missing to calculate the fingerprint for the HTTP header SIGNATRANSM.
+   The global variable _CODAUTOR has been added in the Demo.cs file to facilitate this calculation
+
+2. Bug Fix : UtilesECDSA.KeyPairCreation
+
+3. New : The global variable _SECTACTV has been added to contain the sector of activity
+
+4. New : Type of device that initiated the request. Class ApprlInit in the file ValeursPossibles.cs
+         ApprlInit.SEV   // Point of Sales System
+         ApprlInit.SRV   // Server
+
+5. New : Management of transaction batches
+
+Version 2022-11-04 - Bug fix
+------------------
+
+1. UtilesECDSA.KeyPairCreation( String KeyName, bool DeleteExistingKeys) is deprecated, 
+   please use UtilesECDSA.KeyPairCreation( String KeyName, String AppInit, bool DeleteExistingKeys = false ) instead.
+
+Version 2022-08-29 - Bug fix
+------------------
+
+1. Fix a bug in the function GetJsonDocument() in the file UtilesJSON.cs
+   There was a typo error for de typDoc tag in the json document produced.
+   Replaced typeDoc by typDoc
+
+Version 2022-08-24 - Bug fix and enhancement
+------------------
+
+1. Fix a bug in the function GetDateHeureFormatté() in the file UtilesFormatterDonnees.cs
+
+2. New : HTTP Status codes and description now available with the WEB_SRM's response
+   WEB_SRM_Response.StatusCode
+   WEB_SRM_Response.StatusDescription
+
+   Examples ( DemoGetCertificates( ) in the file Demo.cs )
+      Console.WriteLine( "HTTP Status Code : " + WEB_SRM_Response.StatusCode );
+      Console.WriteLine( "HTTP Status Description : " + WEB_SRM_Response.StatusDescription );
