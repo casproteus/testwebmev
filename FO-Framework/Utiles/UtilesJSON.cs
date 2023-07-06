@@ -62,7 +62,7 @@ namespace FO_Framework
             WEBSRM_Response response;
 
             if( Modif == ValeursPossibles.Modif.AJO )
-                response = SendJson( ValeursPossibles.UrlMEVWEB.Enrolement, HTTPHeadersDict, Json, null );
+                 response = SendJson( ValeursPossibles.UrlMEVWEB.Enrolement, HTTPHeadersDict, Json, null );
             else
                 response = SendJson( ValeursPossibles.UrlMEVWEB.Certificats, HTTPHeadersDict, Json, CertificateSerialNumberSRS );
 

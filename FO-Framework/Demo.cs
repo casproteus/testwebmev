@@ -157,7 +157,7 @@ namespace FO_Framework
         private static readonly String _SECTACTV = ValeursPossibles.Abrvt.RBC;
 
         private static String _CASESSAI = "000.000";
-        private static String _IDAPPRL = "0000-0000-0000";
+        private static String _IDAPPRL = "4812-6957-7492";  // "0000-0000-0000";
         private static readonly String _CODCERTIF = "FOB201999999";
 
         /*
@@ -169,10 +169,10 @@ namespace FO_Framework
         You MUST OBTAIN the following identifiers from Revenu Québec to run the demonstration provided
         Consult the document SW-73 for more details
         */
-        private static readonly String _IDSEV = "000000000000xxxx";    // Your ID - Consult the document SW-73 for more details
-        private static readonly String _IDVERSI = "000000000000xxxx";  // Your ID - Consult the document SW-73 for more details
-        private static readonly String _IDPARTN = "000000000000xxxx";  // Your ID - Consult the document SW-73 for more details
-        private static readonly String _CODAUTH = "X0X0-X0X0";        // Your Authorization code - Consult the document SW-73 for more details
+        private static readonly String _IDSEV = "0000000000003372";    // Your ID - Consult the document SW-73 for more details
+        private static readonly String _IDVERSI = "0000000000003D96";  // Your ID - Consult the document SW-73 for more details
+        private static readonly String _IDPARTN = "00000000000012C6";  // Your ID - Consult the document SW-73 for more details
+        private static readonly String _CODAUTH = "D8T8-W8W8";        // Your Authorization code - Consult the document SW-73 for more details
 
         private static readonly String _VERSI = "1.4";
         private static readonly String _VERSIPARN = "1.0";
@@ -223,37 +223,29 @@ namespace FO_Framework
         public Demo( )
         {
             // Creating a certificate for the SRS and how to get it signed by the WEB-SRM
-            // La fonction suivante demontre comment créer un certificat du SEV et le faire signer par le MEV-WEB
             if( !DemoGetCertificates( ) )
                 Console.WriteLine( "Erreur!" );
             else
             {
                 // Demonstration of a "USER" request - Add a user on the WEB-SRM
-                // Démonstration d'une requête Utilisateur - Ajouter un utilisateur sur le MEV-WEB
                 DemoAddUser( );
 
                 // Demonstration of a "Transaction" request
-                // Démonstration d'une requête Transaction
                 DemoTransaction( );
 
                 // Demonstration of a "Batch Transactions" request
-                // Démonstration d'une requête Lot de Transactions
                 DemoBatchTransactions( );
 
                 // Demonstration of a "Document" request for a User report
-                // Démonstration d'une requête Document Rapport de l'Utilisateur
                 DemoDocumentRUT( );
 
                 // Demonstration of a "Document" request for a Frequent third party report
-                // Démontration d'une requête Document Tiers Habituel
                 DemoDocumentHAB( );
 
                 // Demonstration of a "USER" request - Delete a user on the WEB-SRM
-                // Démonstration d'une requête Utilisateur - supprimer un utilisateur sur le MEVWEB
                 DemoDeleteUser( );
 
                 // Demonstration of a "Certificate" request - Delete a certificate on the SRS and on the WEB-SRM
-                // La fonction suivante demontre comment supprimer un certificat du SEV, sur le SEV et sur le MEV-WEB
                 DemoDeleteCertificate( );
             }
         }
@@ -269,15 +261,12 @@ namespace FO_Framework
             try
             {
                 // KeyPair Creation (public and private)
-                // Création de la paire de clés (publique et privée) 
                 UtilesECDSA.KeyPairCreation( _KeyPairName, _APPRLINIT, true );
 
                 // Creation of the certificate and of the CSR
-                // Création du certificat et demande de signature au MEV-WEB
                 String CSR = CertificateCreation( );
 
                 // Preparation of the json document to send to the WEB-SRM
-                // Préparation du document json pour transmission au MEV-WEB
                 String CSRJSon = UtilesJSON.GetJsonCertificate( ValeursPossibles.Modif.AJO, CSR, null );
 
                 // HTTP Headers
@@ -455,35 +444,27 @@ namespace FO_Framework
         private String CertificateCreation( )
         {
             // The mandatary must enter the mandatary’s identification number
-            // Inscrire le numéro d’identification du mandataire
             String CN = "5678912340";
 
             // The mandatary must enter the abbreviation for the sector of activity and their authorization code separated by a hyphen. Example : AAA-X9X9-X9X9 Organizational unit
-            // Inscrire l’abréviation du secteur d’activité et le code d’autorisation du mandataire reliés par un trait d’union. Exemple : AAA-X9X9-X9X9
             String O = _SECTACTV + "-" + _CODAUTH;
 
             // The mandatary must enter their QST number. Example : 1234567890TQ0001
-            // Inscrire le numéro d’inscription au fichier de la TVQ du mandataire.
             String OU = _noQSTUser;
 
             // The mandatary must enter a user-friendly name for the certificate (8 to 32 characters per the ASCII  The mandatary must enter a user-friendly name for the certificate (8 to 32 characters per the ASCII standards)
-            // Inscrire un nom convivial pour le certificat (8 à 32 caractères selon les normes ASCII).
             String SN = "Certificat A";
 
             // The mandatary must enter their billing file number. Example : AA9999
-            // Inscrire le numéro de dossier relatif à la facturation obligatoire. Exemple : AA9999
             String GN = _NoDossFO;
 
             // The mandatary must enter the municipality's Coordinated Universal Time (UTC). -04:00 or -05:00
-            // Inscrire le temps universel coordonné (UTC) de la municipalité. -04:00 ou -05:00
             String L = Utiles.GetTimeZoneHeure( );
 
             // The mandatary must enter the abbreviation for the province. QC
-            // Inscrire l’abréviation de la province. QC
             String S = "QC";
 
             // The mandatary must enter the abbreviation for the country. CA
-            // Inscrire l’abréviation du pays. CA
             String C = "CA";
 
             try
@@ -501,7 +482,6 @@ namespace FO_Framework
                 sbInfoCertificat.AppendFormat( "CN={0};O={1};SN={2};OU={3};GN={4};L={5};S={6};C={7}", CN, O, SN, OU, GN, L, S, C );
 
                 // CSR preparation and encoding in PEM format
-                // Préparation du CSR et encodage au format PEM
                 String strCSRPEM = UtilesECDSA.CsrEcdsaPreparation( sbInfoCertificat.ToString( ), _KeyPairName );
 
                 return "-----BEGIN CERTIFICATE REQUEST-----\n" + strCSRPEM.Replace( Environment.NewLine, "" ) + "\n-----END CERTIFICATE REQUEST-----";

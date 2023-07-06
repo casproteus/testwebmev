@@ -48,8 +48,7 @@ namespace FO_Framework
         public static void KeyPairCreation( String KeyName, String AppInit, bool DeleteExistingKeys = false )
         {
             // Configuration of the new key pair
-            // Configuration de la nouvelle paire de clés
-            CngKeyCreationParameters KeyParameters = new CngKeyCreationParameters
+             CngKeyCreationParameters KeyParameters = new CngKeyCreationParameters
             {
                 KeyUsage = CngKeyUsages.Signing
             };
@@ -59,12 +58,10 @@ namespace FO_Framework
                 KeyParameters.ExportPolicy = CngExportPolicies.AllowPlaintextExport;
 
             // Delete the existing key pair with the same name, if necessary
-            // Suppression de la paire de clefs existante avec le même nom, au besoin
             if( DeleteExistingKeys && CngKey.Exists( KeyName ) )
                 CngKey.Open( KeyName ).Delete( );
 
             // Creation and storage of the key pair
-            // Création et stockage de la paire de clefs
             CngKey.Create( CngAlgorithm.ECDsaP256, KeyName, KeyParameters );
         }
 
